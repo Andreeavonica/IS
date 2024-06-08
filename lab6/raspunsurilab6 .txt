@@ -1,0 +1,87 @@
+raspunsuri 
+1 d
+2 c, f
+3 a, c, g
+4 b, d, f
+5 b
+6 a, d, e
+7 c
+8 d
+9 b, e, g, i
+10 b
+11 a, d
+12 c, d, e
+13 c, e
+implementare ex 5:
+import java.util.ArrayList;
+import java.util.List;
+
+class Person {
+    private String name;
+    private List<Person> parents;
+    private List<Person> children;
+
+    public Person(String name) {
+        this.name = name;
+        this.parents = new ArrayList<>();
+        this.children = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Person> getParents() {
+        return parents;
+    }
+
+    public List<Person> getChildren() {
+        return children;
+    }
+
+    public void addParent(Person parent) {
+        if (!parents.contains(parent)) {
+            parents.add(parent);
+            parent.addChild(this);
+        }
+    }
+
+    public void addChild(Person child) {
+        if (!children.contains(child)) {
+            children.add(child);
+            child.addParent(this);
+        }
+    }
+
+    public void displayParents() {
+        System.out.println("Parents of " + name + ":");
+        for (Person parent : parents) {
+            System.out.println(parent.getName());
+        }
+    }
+
+    public void displayChildren() {
+        System.out.println("Children of " + name + ":");
+        for (Person child : children) {
+            System.out.println(child.getName());
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Person john = new Person("John");
+        Person jane = new Person("Jane");
+        Person paul = new Person("Paul");
+        Person anna = new Person("Anna");
+
+        john.addChild(paul);
+        jane.addChild(paul);
+        paul.addChild(anna);
+
+        paul.displayParents();
+        john.displayChildren();
+        jane.displayChildren();
+        anna.displayParents();
+    }
+}
